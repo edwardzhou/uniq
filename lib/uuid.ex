@@ -275,6 +275,11 @@ defmodule Uniq.UUID do
   @spec uuid6(format) :: t
   def uuid6(format \\ :default) when format in @formats do
     {time, clock} = Uniq.Generator.next()
+    uuid6_for({time, clock}, format)
+  end
+
+  @spec uuid6_for({integer, integer}, format) :: t
+  def uuid6_for({time, clock} = _time_clock, format \\ :default) when format in @formats do
     node = :crypto.strong_rand_bytes(6)
 
     # Deconstruct timestamp
